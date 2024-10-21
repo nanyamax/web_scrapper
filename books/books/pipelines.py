@@ -42,3 +42,7 @@ class MongoPipeline:
             item["_id"] = item_id
             self.db[self.COLLECTION_NAME].insert_one(ItemAdapter(item).asdict())
             return item
+        
+    def compute_item_id(self, item):
+        url = item["url"]
+        return hashlib.sha256(url.encode("utf-8")).hexdigest()

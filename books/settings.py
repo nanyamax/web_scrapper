@@ -96,3 +96,24 @@ MONGO_URI = "mongodb://localhost:27017"
 MONGO_DATABASE = "books_db"
 LOG_LEVEL = "WARNING"
 LOG_FILE = "book_scraper.log"
+RETRY_TIMES = 3
+RETRY_HTTP_CODES = [500, 429]
+# ...Setting a custom user-agent in your project settings can help mimic a real browser:
+
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+# ...You can also use a middleware to rotate user agents and proxies, which can help distribute requests and reduce the chances of getting blocked
+
+DOWNLOADER_MIDDLEWARES = {
+    "scrapy.downloadermiddlewares.useragent.UserAgentMiddleware": None,
+    "scrapy_user_agents.middlewares.RandomUserAgentMiddleware": 400,
+}
+# ...Finally, you can introduce delays between requests, which can also help to avoid triggering anti-bot measures:
+
+DOWNLOAD_DELAY = 2
+# ...
+#If a site builds a lot of defenses against web scrapers, then you might want to consider whether it’s really a good idea to scrape it. For any site that you plan on scraping, you should always check and adhere to its robots.txt file. This file specifies the site’s permissions for web crawlers. Scrapy also has a setting for this, which is enabled by default:
+# ...
+
+ROBOTSTXT_OBEY = True
+
+# ...
